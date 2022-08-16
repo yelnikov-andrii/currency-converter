@@ -33,7 +33,7 @@
           </ul>
       </div>
         <div class="converter__input">
-          <input class="converter__input-field" type="text" [(ngModel)]="amount1" (ngModelChange)="getSecondInput($event)" (ngKeypress)="setActiveField(2)"/>
+          <input class="converter__input-field" type="text" [(ngModel)]="amount1" (ngModelChange)="getSecondInput($event)"/>
         </div>
       </div>
 
@@ -69,7 +69,7 @@
       </div>
 
         <div class="converter__input">
-          <input class="converter__input-field" type="text" [(ngModel)]="amount2" (ngModelChange)="getFirstInput($event)"(ngKeypress)="setActiveField(1)"/>
+          <input class="converter__input-field" type="text" [(ngModel)]="amount2" (ngModelChange)="getFirstInput($event)"/>
         </div>
       </div>
     </div>

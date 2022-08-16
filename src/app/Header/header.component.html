@@ -1,45 +1,76 @@
 <header class="header">
   <div class="header__block">
-    <h1 class="header__block-title">Converter of currency</h1>
+    <h1 class="header__block-title">Converter of currency
+    </h1>
     <div 
       class="header__block-container converter"
     >
       <div class="converter__block">
-        <select 
-          [(ngModel)]="selectedOption1" 
+        <div 
           class="converter__select select"
-          (change)="getSecondInput(amount1)"
         >
-          <option
-            *ngFor="let item of nameOfCurrency"
-            class="select__option"
-            value={{item.name}}
-            [style.background-image]="'url('+item.image+')'"
+          <div 
+            class="select__main"
+            (click)="dropDownOpen('firstList')"
           >
-            {{item.name}}
-        </option>
-        </select>
-
-        <input type="text" [(ngModel)]="amount1" (ngModelChange)="getSecondInput($event)"/>
+            {{activeItem1?.name}}
+            <span class="select__content-item_icon" [style.background-image]="'url('+activeItem1?.image+')'"></span>
+          </div>
+          <ul 
+            *ngIf="listOfOpenedDropdown.includes('firstList')"
+            class="select__content"
+          >
+            <li 
+              *ngFor="let item of nameOfCurrency"
+              (click)="setActiveItem1(item.name)"
+              class="select__content-item"
+            >
+              <p class="select__content-item_title">
+                {{item.name}}
+              </p>
+              <span class="select__content-item_icon" [style.background-image]="'url('+item.image+')'"></span>
+            </li>
+          </ul>
+      </div>
+        <div class="converter__input">
+          <input class="converter__input-field" type="text" [(ngModel)]="amount1" (ngModelChange)="getSecondInput($event)" (ngKeypress)="setActiveField(2)"/>
+        </div>
       </div>
 
       <div class="converter__block">
-        <select 
-          [(ngModel)]="selectedOption2" 
+        <div 
           class="converter__select select"
-          (change)="getFirstInput(amount2)"
-          
         >
-          <option
-            *ngFor="let item of nameOfCurrency"
-            class="select__item"
+          <div 
+            class="select__main"
+            (click)="dropDownOpen('secondList')"
           >
-            {{item.name}}
-            <span [style.background-image]="'url('+item.image+')'"></span>
-        </option>
-        </select>
+            {{activeItem2?.name}}
+            <span class="select__content-item_icon" [style.background-image]="'url('+activeItem2?.image+')'"></span>
+          </div>
+          <ul 
+            *ngIf="listOfOpenedDropdown.includes('secondList')"
+            class="select__content"
+          >
+            <li 
+              *ngFor="let item of nameOfCurrency"
+              (click)="setActiveItem2(item.name)"
+              class="select__content-item"
+            >
+              <p class="select__content-item_title">
+                {{item.name}}
+              </p>
+              <span 
+                class="select__content-item_icon" [style.background-image]="'url('+item.image+')'"
+              >
+              </span>
+            </li>
+          </ul>
+      </div>
 
-        <input type="text" [(ngModel)]="amount2" (ngModelChange)="getFirstInput($event)"/>
+        <div class="converter__input">
+          <input class="converter__input-field" type="text" [(ngModel)]="amount2" (ngModelChange)="getFirstInput($event)"(ngKeypress)="setActiveField(1)"/>
+        </div>
       </div>
     </div>
   </div>

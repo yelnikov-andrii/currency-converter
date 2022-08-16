@@ -12,12 +12,12 @@ import { currencyObj } from "./type";
 export class HeaderComponent {
   currency: any;
   nameOfCurrency: {name: string, image: string}[] = [
-    {name: 'UAH', image: '.assets/images/ua.svg'},
-    {name: 'EUR', image: '.assets/images/eu.svg'},
-    {name: 'USD', image: '.assets/images/us.svg'},
-    {name: 'GBP', image: '.assets/images/gb.svg'},
-    {name: 'CAD', image: '.assets/images/ca.svg'},
-    {name: 'JPY', image: '.assets/images/jp.svg'},
+    {name: 'UAH', image: '.images/ua.svg'},
+    {name: 'EUR', image: 'eu.svg'},
+    {name: 'USD', image: 'images/us.svg'},
+    {name: 'GBP', image: 'images/gb.svg'},
+    {name: 'CAD', image: 'images/ca.svg'},
+    {name: 'JPY', image: 'images/jp.svg'},
   ];
 
   amount1: string = '0';

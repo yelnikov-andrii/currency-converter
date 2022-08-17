@@ -20,8 +20,8 @@ export class HeaderComponent {
     {name: 'JPY', image: './assets/images/jp.png'},
   ];
 
-  amount1: string = '0';
-  amount2: string = '0';
+  amount1: string = '';
+  amount2: string = '';
   listOfOpenedDropdown: string[] = [];
   activeItem1: currencyObj | undefined = this.nameOfCurrency[0];
   activeItem2: currencyObj | undefined = this.nameOfCurrency[0];
@@ -29,6 +29,7 @@ export class HeaderComponent {
   one: string = '1';
   two: string = '2';
   alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  errorMessage: string = ''
 
   constructor (private http: HttpClient) {
   }
@@ -65,16 +66,11 @@ export class HeaderComponent {
     this.getSecondInput(this.amount1);
     this.dropDownOpen('secondList');
   };
-
-  validateInput(event: Event) {
-
-    console.log(event);
-  }
   
   getFirstInput(event: string | Event) {
-    if (this.alphabet.includes(event.toString().toLowerCase()) && event !== '') {
-      this.amount2 = 'No letters!!!!';
-    }
+    isNaN(+event) ?
+      this.errorMessage = 'No letters!!!!' :
+      this.errorMessage = '';
 
     let result: number = 0;
     if (this.activeItem1 &&  this.activeItem2) {
@@ -86,9 +82,11 @@ export class HeaderComponent {
   };
 
   getSecondInput(event: string | Event) {
-    if (this.alphabet.includes(event.toString().toLowerCase()) && event !== '') {
-      this.amount1 = 'No letters!!!!';
-    }
+    isNaN(+event) ?
+      this.errorMessage = 'No letters!!!!' :
+      this.errorMessage = '';
+    
+
     let result: number = 0;
     if (this.activeItem1 && this.activeItem2) {
       result = +event * +this.currency.rates[this.activeItem2.name] / +this.currency.rates[this.activeItem1.name];

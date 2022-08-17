@@ -59,6 +59,12 @@
   }
 
 }
+
+&__error-block {
+  color: red;
+  font-weight: 700;
+  font-size: 24px;
+}
 }
 
 .select {

@@ -25,6 +25,9 @@ export class HeaderComponent {
   listOfOpenedDropdown: string[] = [];
   activeItem1: currencyObj | undefined = this.nameOfCurrency[0];
   activeItem2: currencyObj | undefined = this.nameOfCurrency[0];
+  activeField: string = '1';
+  one: string = '1';
+  two: string = '2';
 
   constructor (private http: HttpClient) {
   }
@@ -43,15 +46,24 @@ export class HeaderComponent {
     this.listOfOpenedDropdown = [...this.listOfOpenedDropdown, listName];
   };
 
+  setActiveField(value: string) {
+    this.activeField = value;
+    console.log(this.activeField);
+  }
+
   setActiveItem1(item: string) {
     this.activeItem1 = this.nameOfCurrency.find((el: currencyObj) => el ? el.name === item : el);
-    this.getSecondInput(this.amount1);
+    this.activeField === '1' ?
+    this.getSecondInput(this.amount1) :
+    this.getFirstInput(this.amount2);
     this.dropDownOpen('firstList');
   };
 
   setActiveItem2(item: string) {
     this.activeItem2 = this.nameOfCurrency.find((el: currencyObj) => el ? el.name === item : el);
-    this.getFirstInput(this.amount2);
+    this.activeField === '2' ?
+    this.getFirstInput(this.amount2) :
+    this.getSecondInput(this.amount1);
     this.dropDownOpen('secondList');
   };
   
@@ -76,4 +88,5 @@ export class HeaderComponent {
     }
     console.log('second call')
   };
+  
   }

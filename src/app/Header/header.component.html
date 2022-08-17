@@ -11,7 +11,7 @@
         >
           <div 
             class="select__main"
-            (click)="dropDownOpen('firstList')"
+            (click)="dropDownOpen('1')"
           >
             {{activeItem1?.name}}
             <span 
@@ -20,12 +20,12 @@
             </span>
           </div>
           <ul 
-            *ngIf="listOfOpenedDropdown.includes('firstList')"
+            *ngIf="listOfOpenedDropdown.includes('1')"
             class="select__content"
           >
             <li 
               *ngFor="let item of nameOfCurrency"
-              (click)="setActiveItem1(item.name)"
+              (click)="setActiveItem(item.name, activeItem1, '1')"
               class="select__content-item"
             >
               <p class="select__content-item_title">
@@ -42,10 +42,9 @@
           <input 
             class="converter__input-field" 
             type="text" 
-            [attr.data-field]="one" 
-            (click)="setActiveField(one)" 
+            (click)="setActiveField('1')" 
             [(ngModel)]="amount1" 
-            (ngModelChange)="getSecondInput($event)"
+            (ngModelChange)="getInput($event, '2')"
           />
         </div>
       </div>
@@ -56,7 +55,7 @@
         >
           <div 
             class="select__main"
-            (click)="dropDownOpen('secondList')"
+            (click)="dropDownOpen('2')"
           >
             {{activeItem2?.name}}
             <span 
@@ -65,12 +64,12 @@
             </span>
           </div>
           <ul 
-            *ngIf="listOfOpenedDropdown.includes('secondList')"
+            *ngIf="listOfOpenedDropdown.includes('2')"
             class="select__content"
           >
             <li 
               *ngFor="let item of nameOfCurrency"
-              (click)="setActiveItem2(item.name)"
+              (click)="setActiveItem(item.name, activeItem2, '2')"
               class="select__content-item"
             >
               <p class="select__content-item_title">
@@ -88,10 +87,10 @@
         <div class="converter__input">
           <input 
             class="converter__input-field" 
-            type="text" [attr.data-field]="two" 
-            (click)="setActiveField(two)" 
+            type="text"
+            (click)="setActiveField('2')" 
             [(ngModel)]="amount2" 
-            (ngModelChange)="getFirstInput($event)"
+            (ngModelChange)="getInput($event, '1')"
           />
         </div>
       </div>

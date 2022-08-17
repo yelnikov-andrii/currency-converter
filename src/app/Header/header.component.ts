@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import {HttpClient} from '@angular/common/http';
+import { AfterContentInit, Component } from "@angular/core";
 import { currencyObj } from "./type";
+import { ApiService } from '../service';
 
 
 @Component({
@@ -9,9 +9,9 @@ import { currencyObj } from "./type";
   styleUrls: ['./header.component.scss'],
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements AfterContentInit {
   currency: any;
-  nameOfCurrency: {name: string, image: string}[] = [
+  nameOfCurrency: currencyObj[] = [
     {name: 'UAH', image: './assets/images/ua.png'},
     {name: 'EUR', image: './assets/images/eu.png'},
     {name: 'USD', image: './assets/images/us.png'},
@@ -26,73 +26,52 @@ export class HeaderComponent {
   activeItem1: currencyObj | undefined = this.nameOfCurrency[0];
   activeItem2: currencyObj | undefined = this.nameOfCurrency[0];
   activeField: string = '1';
-  one: string = '1';
-  two: string = '2';
   errorMessage: string = ''
 
-  constructor (private http: HttpClient) {
+  constructor (private api: ApiService) {
   }
 
   ngAfterContentInit() {
-    this.http.get('https://cdn.cur.su/api/latest.json')
-    .subscribe((response) => {
-        this.currency = response;
+    this.api.getData().subscribe((response: any) =>  {
+      this.currency = response;
     })
   };
 
-  dropDownOpen(listName: string) {
-    this.listOfOpenedDropdown.includes(listName) ?
-    this.listOfOpenedDropdown = this.listOfOpenedDropdown.filter((name) => name !== listName) :
-    this.listOfOpenedDropdown = [...this.listOfOpenedDropdown, listName];
+  dropDownOpen(list: string) {
+    this.listOfOpenedDropdown.includes(list) ?
+    this.listOfOpenedDropdown = this.listOfOpenedDropdown.filter((name) => name !== list) :
+    this.listOfOpenedDropdown = [...this.listOfOpenedDropdown, list];
   };
 
   setActiveField(value: string) {
     this.activeField = value;
   }
 
-  setActiveItem1(item: string) {
-    this.activeItem1 = this.nameOfCurrency.find((el: currencyObj) => el ? el.name === item : el);
+  setActiveItem(value: string, item: currencyObj | undefined, num: string) {
+    this.activeItem1 === item ?
+    this.activeItem1 = this.nameOfCurrency.find((el: currencyObj) => el ? el?.name === value : el):
+    this.activeItem2 = this.nameOfCurrency.find((el: currencyObj) => el ? el?.name === value : el);
     this.activeField === '1' ?
-    this.getSecondInput(this.amount1) :
-    this.getFirstInput(this.amount2);
-    this.dropDownOpen('firstList');
+    this.getInput(this.amount1, '2') :
+    this.getInput(this.amount2, '1');
+    this.dropDownOpen(num);
   };
 
-  setActiveItem2(item: string) {
-    this.activeItem2 = this.nameOfCurrency.find((el: currencyObj) => el ? el.name === item : el);
-    this.activeField === '2' ?
-    this.getFirstInput(this.amount2) :
-    this.getSecondInput(this.amount1);
-    this.dropDownOpen('secondList');
-  };
-  
-  getFirstInput(event: string | Event) {
-    isNaN(+event) ?
+  getInput(event: string | Event, num: string) {
+      isNaN(+event) ?
       this.errorMessage = 'No letters!!!!' :
       this.errorMessage = '';
 
-    let result: number = 0;
-    if (this.activeItem1 && this.activeItem2) {
-      result = +event * +this.currency.rates[this.activeItem1.name] / +this.currency.rates[this.activeItem2.name];
-    }
-   Number.isInteger(result) ? 
+      let result: number = 0;
+      if (this.activeItem1 && this.activeItem2) {
+        num === '1' ?
+        result = +event * +this.currency.rates[this.activeItem1.name] / +this.currency.rates[this.activeItem2.name] :
+        result = +event * +this.currency.rates[this.activeItem2.name] / +this.currency.rates[this.activeItem1.name];
+      }
+
+      num === '1' ? 
    this.amount1 = result.toString() :
-   this.amount1 = result.toFixed(4).toString();
-  };
-
-  getSecondInput(event: string | Event) {
-    isNaN(+event) ?
-      this.errorMessage = 'No letters!!!!' :
-      this.errorMessage = '';
-    
-
-    let result: number = 0;
-    if (this.activeItem1 && this.activeItem2) {
-      result = +event * +this.currency.rates[this.activeItem2.name] / +this.currency.rates[this.activeItem1.name];
-   Number.isInteger(result) ? 
-   this.amount2 = result.toString() :
-   this.amount2 = result.toFixed(4).toString();
-    }
-  };
-  
+   this.amount2 = result.toString();
+     
   }
+}

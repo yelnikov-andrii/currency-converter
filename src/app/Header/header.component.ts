@@ -72,7 +72,7 @@ export class HeaderComponent {
   }
   
   getFirstInput(event: string | Event) {
-    if (this.alphabet.includes(event.toString()) && event !== '') {
+    if (this.alphabet.includes(event.toString().toLowerCase()) && event !== '') {
       this.amount2 = 'No letters!!!!';
     }
 
@@ -86,7 +86,7 @@ export class HeaderComponent {
   };
 
   getSecondInput(event: string | Event) {
-    if (this.alphabet.includes(event.toString()) && event !== '') {
+    if (this.alphabet.includes(event.toString().toLowerCase()) && event !== '') {
       this.amount1 = 'No letters!!!!';
     }
     let result: number = 0;

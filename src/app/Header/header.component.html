@@ -14,7 +14,10 @@
             (click)="dropDownOpen('firstList')"
           >
             {{activeItem1?.name}}
-            <span class="select__content-item_icon" [style.background-image]="'url('+activeItem1?.image+')'"></span>
+            <span 
+              class="select__content-item_icon" 
+              [style.background-image]="'url('+activeItem1?.image+')'">
+            </span>
           </div>
           <ul 
             *ngIf="listOfOpenedDropdown.includes('firstList')"
@@ -28,12 +31,22 @@
               <p class="select__content-item_title">
                 {{item.name}}
               </p>
-              <span class="select__content-item_icon" [style.background-image]="'url('+item.image+')'"></span>
+              <span 
+                class="select__content-item_icon" 
+                [style.background-image]="'url('+item.image+')'">
+              </span>
             </li>
           </ul>
       </div>
         <div class="converter__input">
-          <input class="converter__input-field" type="text" [attr.data-field]="one" (click)="setActiveField(one)" [(ngModel)]="amount1" (ngModelChange)="getSecondInput($event)"/>
+          <input 
+            class="converter__input-field" 
+            type="text" 
+            [attr.data-field]="one" 
+            (click)="setActiveField(one)" 
+            [(ngModel)]="amount1" 
+            (ngModelChange)="getSecondInput($event)"
+          />
         </div>
       </div>
 
@@ -46,7 +59,10 @@
             (click)="dropDownOpen('secondList')"
           >
             {{activeItem2?.name}}
-            <span class="select__content-item_icon" [style.background-image]="'url('+activeItem2?.image+')'"></span>
+            <span 
+              class="select__content-item_icon" 
+              [style.background-image]="'url('+activeItem2?.image+')'">
+            </span>
           </div>
           <ul 
             *ngIf="listOfOpenedDropdown.includes('secondList')"
@@ -61,7 +77,8 @@
                 {{item.name}}
               </p>
               <span 
-                class="select__content-item_icon" [style.background-image]="'url('+item.image+')'"
+                class="select__content-item_icon" 
+                [style.background-image]="'url('+item.image+')'"
               >
               </span>
             </li>
@@ -69,10 +86,20 @@
       </div>
 
         <div class="converter__input">
-          <input class="converter__input-field" type="text" [attr.data-field]="two" (click)="setActiveField(two)" [(ngModel)]="amount2" (ngModelChange)="getFirstInput($event)"/>
+          <input 
+            class="converter__input-field" 
+            type="text" [attr.data-field]="two" 
+            (click)="setActiveField(two)" 
+            [(ngModel)]="amount2" 
+            (ngModelChange)="getFirstInput($event)"
+          />
         </div>
       </div>
-      <div *ngIf="errorMessage" class="converter__error-block">{{errorMessage}}</div>
+      <div 
+        *ngIf="errorMessage" 
+        class="converter__error-block">
+        {{errorMessage}}
+      </div>
     </div>
   </div>
 </header>

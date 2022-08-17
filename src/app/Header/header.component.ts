@@ -28,7 +28,6 @@ export class HeaderComponent {
   activeField: string = '1';
   one: string = '1';
   two: string = '2';
-  alphabet = 'abcdefghijklmnopqrstuvwxyz';
   errorMessage: string = ''
 
   constructor (private http: HttpClient) {
@@ -73,7 +72,7 @@ export class HeaderComponent {
       this.errorMessage = '';
 
     let result: number = 0;
-    if (this.activeItem1 &&  this.activeItem2) {
+    if (this.activeItem1 && this.activeItem2) {
       result = +event * +this.currency.rates[this.activeItem1.name] / +this.currency.rates[this.activeItem2.name];
     }
    Number.isInteger(result) ? 

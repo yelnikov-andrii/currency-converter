@@ -1,104 +1,100 @@
 <header class="header">
-  <div class="header__block">
-    <h1 class="header__block-title">Converter of currency
-    </h1>
-    <div 
-      class="header__block-container converter"
-    >
-      <div class="converter__block">
-        <div 
-          class="converter__select select"
-        >
-          <div 
-            class="select__main"
-            (click)="dropDownOpen('1')"
-          >
-            {{activeItem1?.name}}
-            <span 
-              class="select__content-item_icon" 
-              [style.background-image]="'url('+activeItem1?.image+')'">
-            </span>
-          </div>
-          <ul 
-            *ngIf="listOfOpenedDropdown.includes('1')"
-            class="select__content"
-          >
-            <li 
-              *ngFor="let item of nameOfCurrency"
-              (click)="setActiveItem(item.name, activeItem1, '1')"
-              class="select__content-item"
-            >
-              <p class="select__content-item_title">
-                {{item.name}}
-              </p>
-              <span 
-                class="select__content-item_icon" 
-                [style.background-image]="'url('+item.image+')'">
-              </span>
-            </li>
-          </ul>
-      </div>
-        <div class="converter__input">
-          <input 
-            class="converter__input-field" 
-            type="text" 
-            (click)="setActiveField('1')" 
-            [(ngModel)]="amount1" 
-            (ngModelChange)="getInput($event, '2')"
-          />
-        </div>
-      </div>
+    <div class="header__block">
+        <h1 class="header__block-title">Converter of currency</h1>
+        <div class="header__block-container converter">
+            <div class="converter__block">
+                <div class="converter__select select">
+                    <div class="select__main" (click)="dropDownOpen('1')">
+                        {{ activeItem1?.name }}
+                        <span
+                            class="select__content-item_icon"
+                            [style.background-image]="
+                                'url(' + activeItem1?.image + ')'
+                            "
+                        >
+                        </span>
+                    </div>
+                    <ul
+                        *ngIf="listOfOpenedDropdown.includes('1')"
+                        class="select__content"
+                    >
+                        <li
+                            *ngFor="let item of nameOfCurrency"
+                            (click)="setActiveItem(item.name, activeItem1, '1')"
+                            class="select__content-item"
+                        >
+                            <p class="select__content-item_title">
+                                {{ item.name }}
+                            </p>
+                            <span
+                                class="select__content-item_icon"
+                                [style.background-image]="
+                                    'url(' + item.image + ')'
+                                "
+                            >
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="converter__input">
+                    <input
+                        class="converter__input-field"
+                        type="text"
+                        (click)="setActiveField('1')"
+                        [(ngModel)]="amount1"
+                        (ngModelChange)="getInput($event, '2')"
+                    />
+                </div>
+            </div>
 
-      <div class="converter__block">
-        <div 
-          class="converter__select select"
-        >
-          <div 
-            class="select__main"
-            (click)="dropDownOpen('2')"
-          >
-            {{activeItem2?.name}}
-            <span 
-              class="select__content-item_icon" 
-              [style.background-image]="'url('+activeItem2?.image+')'">
-            </span>
-          </div>
-          <ul 
-            *ngIf="listOfOpenedDropdown.includes('2')"
-            class="select__content"
-          >
-            <li 
-              *ngFor="let item of nameOfCurrency"
-              (click)="setActiveItem(item.name, activeItem2, '2')"
-              class="select__content-item"
-            >
-              <p class="select__content-item_title">
-                {{item.name}}
-              </p>
-              <span 
-                class="select__content-item_icon" 
-                [style.background-image]="'url('+item.image+')'"
-              >
-              </span>
-            </li>
-          </ul>
-      </div>
+            <div class="converter__block">
+                <div class="converter__select select">
+                    <div class="select__main" (click)="dropDownOpen('2')">
+                        {{ activeItem2?.name }}
+                        <span
+                            class="select__content-item_icon"
+                            [style.background-image]="
+                                'url(' + activeItem2?.image + ')'
+                            "
+                        >
+                        </span>
+                    </div>
+                    <ul
+                        *ngIf="listOfOpenedDropdown.includes('2')"
+                        class="select__content"
+                    >
+                        <li
+                            *ngFor="let item of nameOfCurrency"
+                            (click)="setActiveItem(item.name, activeItem2, '2')"
+                            class="select__content-item"
+                        >
+                            <p class="select__content-item_title">
+                                {{ item.name }}
+                            </p>
+                            <span
+                                class="select__content-item_icon"
+                                [style.background-image]="
+                                    'url(' + item.image + ')'
+                                "
+                            >
+                            </span>
+                        </li>
+                    </ul>
+                </div>
 
-        <div class="converter__input">
-          <input 
-            class="converter__input-field" 
-            type="text"
-            (click)="setActiveField('2')" 
-            [(ngModel)]="amount2" 
-            (ngModelChange)="getInput($event, '1')"
-          />
+                <div class="converter__input">
+                    <input
+                        class="converter__input-field"
+                        type="text"
+                        (click)="setActiveField('2')"
+                        [(ngModel)]="amount2"
+                        (ngModelChange)="getInput($event, '1')"
+                    />
+                </div>
+            </div>
+            <div *ngIf="errorMessage" class="converter__error-block">
+                {{ errorMessage }}
+            </div>
         </div>
-      </div>
-      <div 
-        *ngIf="errorMessage" 
-        class="converter__error-block">
-        {{errorMessage}}
-      </div>
     </div>
-  </div>
 </header>

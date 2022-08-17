@@ -28,6 +28,7 @@ export class HeaderComponent {
   activeField: string = '1';
   one: string = '1';
   two: string = '2';
+  alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
   constructor (private http: HttpClient) {
   }
@@ -36,7 +37,6 @@ export class HeaderComponent {
     this.http.get('https://cdn.cur.su/api/latest.json')
     .subscribe((response) => {
         this.currency = response;
-        console.log(response);
     })
   };
 
@@ -48,7 +48,6 @@ export class HeaderComponent {
 
   setActiveField(value: string) {
     this.activeField = value;
-    console.log(this.activeField);
   }
 
   setActiveItem1(item: string) {
@@ -66,8 +65,17 @@ export class HeaderComponent {
     this.getSecondInput(this.amount1);
     this.dropDownOpen('secondList');
   };
+
+  validateInput(event: Event) {
+
+    console.log(event);
+  }
   
   getFirstInput(event: string | Event) {
+    if (this.alphabet.includes(event.toString()) && event !== '') {
+      this.amount2 = 'No letters!!!!';
+    }
+
     let result: number = 0;
     if (this.activeItem1 &&  this.activeItem2) {
       result = +event * +this.currency.rates[this.activeItem1.name] / +this.currency.rates[this.activeItem2.name];
@@ -75,10 +83,12 @@ export class HeaderComponent {
    Number.isInteger(result) ? 
    this.amount1 = result.toString() :
    this.amount1 = result.toFixed(4).toString();
-   console.log('firts call')
   };
 
   getSecondInput(event: string | Event) {
+    if (this.alphabet.includes(event.toString()) && event !== '') {
+      this.amount1 = 'No letters!!!!';
+    }
     let result: number = 0;
     if (this.activeItem1 && this.activeItem2) {
       result = +event * +this.currency.rates[this.activeItem2.name] / +this.currency.rates[this.activeItem1.name];
@@ -86,7 +96,6 @@ export class HeaderComponent {
    this.amount2 = result.toString() :
    this.amount2 = result.toFixed(4).toString();
     }
-    console.log('second call')
   };
   
   }

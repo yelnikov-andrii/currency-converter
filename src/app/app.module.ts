@@ -6,12 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from './service';
+import { FormComponent } from './Header/form/form.component';
+import { DataService } from './service/dataservice.service';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent],
+    declarations: [AppComponent, HeaderComponent, FormComponent],
     imports: [BrowserModule, HttpClientModule, FormsModule],
-    providers: [ApiService],
+    providers: [DataService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

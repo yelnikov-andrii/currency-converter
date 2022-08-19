@@ -1,0 +1,46 @@
+<div class="converter__block">
+  <div class="converter__select select">
+      <div class="select__main" (click)="dropDownOpen()">
+        {{ activeItem?.name }}
+          <span
+              class="select__content-item_icon"
+              [style.background-image]="
+                                'url(' + activeItem?.image + ')'
+                            "
+          >
+          </span>
+      </div>
+      <ul
+          class="select__content"
+          *ngIf="dropdownIsOpen"
+      >
+          <li
+              class="select__content-item"
+              *ngFor="let item of dataObjects"
+              (click)="setActiveItem(item.name)"
+          >
+              <p class="select__content-item_title">
+                  {{item.name}}
+              </p>
+              <span
+                  class="select__content-item_icon"
+                  [style.background-image]="
+                                    'url(' + item.image + ')'
+                                "
+              >
+              </span>
+          </li>
+      </ul>
+  </div>
+
+  <div class="converter__input">
+      <input
+          class="converter__input-field"
+          type="text"
+          (click)="setActiveField(true)"
+          [(ngModel)]="inputResult"
+          #input
+          (keyup)="getInput(input.value)"
+      />
+  </div>
+</div>

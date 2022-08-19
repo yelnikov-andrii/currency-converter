@@ -1,0 +1,86 @@
+.converter {
+  &__block {
+      display: flex;
+      justify-content: space-around;
+      max-width: 400px;
+      margin-bottom: 20px;
+      min-width: 320px;
+      width: 100%;
+  }
+
+  &__select {
+      width: 45%;
+      display: block;
+      font-size: 16px;
+      font-family: sans-serif;
+      font-weight: 700;
+      color: #444;
+      max-width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      border: 1px solid #aaa;
+      border-radius: 0.5em;
+      background-color: #fff;
+  }
+
+  &__input {
+      width: 45%;
+
+      &-field {
+          padding: 7px;
+          width: 100%;
+          outline: none;
+          box-sizing: border-box;
+      }
+  }
+}
+
+.select {
+  &__main {
+      text-indent: 10px;
+      display: flex;
+      align-items: center;
+      margin: 7px 0;
+      position: relative;
+  }
+  &__content {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      width: 100%;
+      max-width: 178px;
+      z-index: 2;
+
+      &-item {
+          padding: 5px 0;
+          text-indent: 10px;
+          background-color: #fff;
+          display: flex;
+          align-items: center;
+
+          &_icon {
+              display: inline-block;
+              width: 30px;
+              height: 20px;
+              margin-left: 5px;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+          }
+
+          &_title {
+              margin: 5px 0;
+          }
+
+          &:nth-child(2n + 1) {
+              background-color: #efefef;
+          }
+
+          &:hover {
+              background-color: #b3b3b3;
+              cursor: pointer;
+          }
+      }
+  }
+}

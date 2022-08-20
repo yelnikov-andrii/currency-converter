@@ -37,8 +37,8 @@
       <input
           class="converter__input-field"
           type="text"
-          (click)="setActiveField(true)"
-          [(ngModel)]="inputResult"
+          (click)="setFieldActive(true)"
+          [(ngModel)]="displayingResult"
           #input
           (keyup)="getInput(input.value)"
       />

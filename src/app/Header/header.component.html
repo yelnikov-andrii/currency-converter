@@ -3,23 +3,19 @@
       <h1 class="header__block-title">Converter of currency</h1>
       <div class="header__block-container converter">
         <app-form 
-          (setErrorEvent)='setError($event)' 
-          (setResult)='setResultSecondInput($event)' 
-          [activeSecondField]="activeItemSecond"
+          (setError)='setError($event)' 
+          (setInputedValue)='setResultSecondInput($event)' 
           (setActiveItemEvent)="setActiveItemMain($event)"
-          (setActiveFieldToHeader)="setActiveFieldMain($event)"
-          [inputResult]="resultMainInput"
-          [activeField]="activeFieldMain"
+          (setActiveField)="setActiveMainField($event)"
+          [displayingResult]="resultMainInput"
           class="converter__block">
         </app-form>
         <app-form 
-          (setErrorEvent)='setError($event)' 
-          (setResult)='setResultMainInput($event)' 
-          [activeSecondField]="activeItemMain"
-          [activeField]="activeFieldSecond"
-          (setActiveFieldToHeader)="setActiveFieldSecond($event)"
+          (setError)='setError($event)' 
+          (setInputedValue)='setResultMainInput($event)'
+          (setActiveField)="setActiveSecondField($event)"
           (setActiveItemEvent)="setActiveItemSecond($event)"
-          [inputResult]="resultSecondInput"
+          [displayingResult]="resultSecondInput"
           class="converter__block"
         >
         </app-form>

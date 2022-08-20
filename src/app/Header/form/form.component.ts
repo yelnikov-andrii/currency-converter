@@ -1,4 +1,9 @@
-import { AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { 
+    Component,
+    EventEmitter,
+    Input,
+    Output, 
+} from '@angular/core';
 import { currencyObj } from '../type';
 import { DataService } from 'src/app/service/dataservice.service';
 
@@ -7,82 +12,46 @@ import { DataService } from 'src/app/service/dataservice.service';
     templateUrl: './form.component.html',
     styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements AfterContentInit {
+export class FormComponent {
   @Output() 
-      setErrorEvent = new EventEmitter<string>();
-   @Output()
-       setActiveItemEvent = new EventEmitter<currencyObj>();
-   @Output()
-       setActiveFieldToHeader = new EventEmitter<boolean>();
-   @Output()
-       setResult = new EventEmitter<string>();
-    @Input()
-        activeSecondField: currencyObj | undefined;
-
-    ngOnChanges(changes: SimpleChanges) {
-        console.log(this.activeField);
+      setError = new EventEmitter<string>();
+  @Output() 
+      setActiveField = new EventEmitter<boolean>();
+  @Output()
+      setActiveItemEvent = new EventEmitter<currencyObj>();
+  @Output()
+      setInputedValue = new EventEmitter<string>();
+  @Input()
+      displayingResult: any;
   
-        if( changes['activeSecondField'] && changes['activeSecondField'].previousValue != changes['activeSecondField'].currentValue ) {
-            this.activeField === true &&
-              this.getInput(this.value)
-            this.setResult.emit(this.result);
-        }
-    }
-      
-    @Input()
-        inputResult: any;
-    @Input()
-        activeField: any;
-  
-    currency: any;
-    errorMessage: string = '';
-    result: string = '0';
-    value: string | Event = '0';
+  errorMessage: string = '';
+  dropdownIsOpen: boolean = false;
+  dataObjects: currencyObj[];
+  activeItem: currencyObj | undefined;
 
-    dropdownIsOpen: boolean = false;
-    dataObjects: currencyObj[];
-    activeItem: currencyObj | undefined;
-    constructor( private dataService: DataService) {
-        this.dataObjects = dataService.getNamesOfCurrency();
-        this.activeItem = this.dataObjects[0];
-    }
+  constructor(private Dataservice: DataService) {
+      this.dataObjects = Dataservice.getNamesOfCurrency();
+      this.activeItem = this.dataObjects[0];
+  }
 
-    ngAfterContentInit() {
-        this.dataService.getData().subscribe((response: any) => {
-            this.currency = response;
-        });
-    }
+  dropDownOpen() {
+      this.dropdownIsOpen = !this.dropdownIsOpen;
+  };
 
-    setActiveField(bool: boolean) {
-        this.setActiveFieldToHeader.emit(bool);
-    }
+  setFieldActive(value: boolean) {
+      this.setActiveField.emit(value)
+  };
 
-    dropDownOpen() {
-        this.dropdownIsOpen = !this.dropdownIsOpen;
-    }
+  setActiveItem(name: string) {
+      this.activeItem = this.dataObjects.find((el: currencyObj) =>
+          el ? el?.name === name : el);
+      this.dropDownOpen();
+      this.setActiveItemEvent.emit(this.activeItem);
+  }
 
-    setActiveItem(name: string) {
-        this.activeItem = this.dataObjects.find((el: currencyObj) =>
-            el ? el?.name === name : el);
-        this.dropDownOpen();
-        this.setActiveItemEvent.emit(this.activeItem);
-        this.activeField && 
-        this.getInput(this.value);
-
-    }
-
-    getInput(value: Event | string) {
-        isNaN(+value)
-            ? (this.errorMessage = 'No letters!!!!')
-            : (this.errorMessage = '');
-        this.setErrorEvent.emit(this.errorMessage);
-
-        if (this.activeItem && this.activeSecondField) {
-            this.value = value;
-            this.result = (+value * +this.currency.rates[this.activeSecondField.name] /
-        +this.currency.rates[this.activeItem.name]).toString()
-        }
-
-        this.setResult.emit(this.result);
-    }
+  getInput(value: string) {
+      isNaN(+value) && (this.errorMessage = 'No letters!!!!');
+      this.setError.emit(this.errorMessage);
+      this.setInputedValue.emit(value);
+  }
 }

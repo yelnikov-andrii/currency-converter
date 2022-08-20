@@ -1,5 +1,5 @@
-import { Component, AfterContentInit  } from '@angular/core';
-import { currencyObj } from '../Header/type';
+import { Component } from '@angular/core';
+import { currencyObj } from './type';
 import { DataService } from '../service/dataservice.service';
 
 @Component({
@@ -7,23 +7,37 @@ import { DataService } from '../service/dataservice.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements AfterContentInit  {
+export class HeaderComponent {
     errorMessage = '';
-    activeItemMain: currencyObj | undefined;
-    activeItemSecond: currencyObj | undefined;
+    activeItemMain: currencyObj;
+    activeItemSecond: currencyObj;
     resultMainInput: string = '0';
     resultSecondInput: string = '0';
     dataObjects: currencyObj[];
-    activeFieldMain: boolean = false;
-    activeFieldSecond: boolean = false;
+    anotherFieldMain: currencyObj;
+    anotherFieldSecond: currencyObj;
+    currency: any;
+    valueMain = '0';
+    valueSecond = '0';
+    fieldActiveMain = false;
+    fieldActiveSecond = false;
 
-    constructor( private ConverterdataService: DataService) {
-        this.dataObjects = ConverterdataService.getNamesOfCurrency();
-    }
+    constructor( private DataService: DataService) {
+        this.dataObjects = DataService.getNamesOfCurrency();
+        this.DataService.getData().subscribe((response: any) => {
+            this.currency = response;
+        })
 
-    ngAfterContentInit() {
         this.activeItemMain = this.dataObjects[0];
         this.activeItemSecond = this.dataObjects[0];
+        this.anotherFieldMain = this.dataObjects[0];
+        this.anotherFieldSecond = this.dataObjects[0];
+    }
+
+    setResultAccordingActiveField(field: boolean) {
+        field ?
+            this.setResultSecondInput(this.valueMain) :
+            this.setResultMainInput(this.valueSecond);
     }
 
 
@@ -31,29 +45,44 @@ export class HeaderComponent implements AfterContentInit  {
         this.errorMessage = value;
     }
 
+    setActiveSecondField(value: boolean) {
+        this.fieldActiveSecond = value;
+        this.fieldActiveMain = !value;
+    }
+
+    setActiveMainField(value: boolean) {
+        this.fieldActiveSecond = !value;
+        this.fieldActiveMain = value;
+    }
+
     setActiveItemMain(obj: any) {
         this.activeItemMain = obj;
+        this.anotherFieldSecond = obj;
+
+        this.setResultAccordingActiveField(this.fieldActiveMain);
     }
 
     setActiveItemSecond(obj: any) {
         this.activeItemSecond = obj;
+        this.anotherFieldMain = obj;
+
+        this.setResultAccordingActiveField(this.fieldActiveMain);
     }
 
-    setResultMainInput(value: any) {
-        this.resultMainInput = value;
+    setResultFunction(activeItem: currencyObj, anotherItem: currencyObj, currency: any) {
+        let result = +currency.rates[activeItem.name] / +currency.rates[anotherItem.name];
+        return result;
     }
 
-    setResultSecondInput(value: any) {
-        this.resultSecondInput = value;
+    setResultMainInput(value: string) {
+        let result = +value * this.setResultFunction(this.activeItemMain, this.anotherFieldMain, this.currency);
+        this.resultMainInput = result.toString();
+        this.valueSecond = value;
     }
 
-    setActiveFieldMain(bool: boolean) {
-        this.activeFieldMain = bool;
-        this.activeFieldSecond = !bool;
-    }
-
-    setActiveFieldSecond(bool: boolean) {
-        this.activeFieldSecond = bool;
-        this.activeFieldMain = !bool;
+    setResultSecondInput(value: string) {
+        let result = +value * this.setResultFunction(this.activeItemSecond, this.anotherFieldSecond, this.currency);
+        this.resultSecondInput = result.toString();
+        this.valueMain = value;
     }
 }
